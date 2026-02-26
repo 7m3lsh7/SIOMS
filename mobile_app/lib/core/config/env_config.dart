@@ -1,6 +1,6 @@
 class EnvConfig {
   static const String baseUrl = String.fromEnvironment(
     'BASE_URL',
-    defaultValue: 'http://10.0.2.2:5000',
+    defaultValue: 'http://localhost:5000/api',
   );
 }
