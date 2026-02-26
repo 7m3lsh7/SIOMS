@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import '../constants/app_constants.dart';
-import '../config/env_config.dart';
+import 'package:mobile_app/core/constants/app_constants.dart';
+import 'package:mobile_app/core/config/env_config.dart';
 
 class ApiClient {
   final Dio _dio;

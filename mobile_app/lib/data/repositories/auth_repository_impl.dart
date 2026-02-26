@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'dart:convert';
-import '../../core/constants/app_constants.dart';
-import '../../domain/repositories/auth_repository.dart';
-import '../models/user_model.dart';
-import '../datasources/api_client.dart';
+import 'package:mobile_app/core/constants/app_constants.dart';
+import 'package:mobile_app/domain/repositories/auth_repository.dart';
+import 'package:mobile_app/data/models/user_model.dart';
+import 'package:mobile_app/data/datasources/api_client.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final ApiClient _apiClient;

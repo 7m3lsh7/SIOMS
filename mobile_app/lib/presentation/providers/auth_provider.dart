@@ -1,10 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import '../../data/datasources/api_client.dart';
-import '../../data/repositories/auth_repository_impl.dart';
-import '../../domain/repositories/auth_repository.dart';
-import '../../data/models/user_model.dart';
+import 'package:mobile_app/data/datasources/api_client.dart';
+import 'package:mobile_app/data/repositories/auth_repository_impl.dart';
+import 'package:mobile_app/domain/repositories/auth_repository.dart';
+import 'package:mobile_app/data/models/user_model.dart';
 
 final dioProvider = Provider((ref) => Dio());
 final storageProvider = Provider((ref) => const FlutterSecureStorage());
