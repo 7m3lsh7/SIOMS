@@ -10,10 +10,25 @@ class AttendanceScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final attendanceAsync = ref.watch(attendanceProvider);
+    final user = ref.watch(authProvider).user;
+    final isAdmin = user?.role == 'Admin' || user?.role == 'HR';
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Logistics'),
+        actions: [
+          if (isAdmin) ...[
+            IconButton(
+              onPressed: () => _markLate(context, ref),
+              icon: const Icon(Icons.timer_off_rounded, color: AppColors.warning),
+            ),
+            IconButton(
+              onPressed: () => _processDay(context, ref),
+              icon: const Icon(Icons.done_all_rounded, color: AppColors.primary),
+            ),
+          ],
+          const SizedBox(width: 8),
+        ],
       ),
       body: attendanceAsync.when(
         data: (records) => ListView.builder(
@@ -62,6 +77,26 @@ class AttendanceScreen extends ConsumerWidget {
         error: (err, stack) => Center(child: Text('Error: $err')),
       ),
     );
+  }
+
+  void _markLate(BuildContext context, WidgetRef ref) async {
+    try {
+      await ref.read(attendanceRepositoryProvider).markLateNow();
+      ref.invalidate(attendanceProvider);
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Late status processed.')));
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error: $e')));
+    }
+  }
+
+  void _processDay(BuildContext context, WidgetRef ref) async {
+    try {
+      await ref.read(attendanceRepositoryProvider).processDay();
+      ref.invalidate(attendanceProvider);
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Day processed successfully.')));
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error: $e')));
+    }
   }
 
   Widget _buildIndicator(String status) {

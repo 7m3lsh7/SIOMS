@@ -11,11 +11,18 @@ class CanteenScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final productsAsync = ref.watch(canteenProductsProvider);
     final cart = ref.watch(cartProvider);
+    final user = ref.watch(authProvider).user;
+    final isManager = user?.role == 'Admin' || user?.role == 'CanteenManager';
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Canteen POS', style: TextStyle(fontFamily: 'Sora', fontWeight: FontWeight.bold)),
         actions: [
+          if (isManager)
+            IconButton(
+              onPressed: () => _showProductManagement(context, ref),
+              icon: const Icon(Icons.inventory_rounded, color: AppColors.primary),
+            ),
           Stack(
             children: [
               IconButton(
@@ -159,6 +166,10 @@ class CanteenScreen extends ConsumerWidget {
         );
       },
     );
+  }
+
+  void _showProductManagement(BuildContext context, WidgetRef ref) {
+    // Show premium management screen or modal...
   }
 
   void _checkout(BuildContext context, WidgetRef ref) async {

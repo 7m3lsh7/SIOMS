@@ -8,4 +8,6 @@ abstract class AttendanceRepository {
   Future<Map<String, dynamic>> getMyQr();
   Future<void> qrCheckIn(String qrData, {double? lat, double? lng});
   Future<void> myCheckOut();
+  Future<void> markLateNow();
+  Future<void> processDay();
 }

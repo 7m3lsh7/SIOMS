@@ -54,4 +54,14 @@ class AttendanceRepositoryImpl implements AttendanceRepository {
   Future<void> myCheckOut() async {
     await _apiClient.post('/attendance/my-checkout');
   }
+
+  @override
+  Future<void> markLateNow() async {
+    await _apiClient.post('/attendance/mark-late-now');
+  }
+
+  @override
+  Future<void> processDay() async {
+    await _apiClient.post('/attendance/process-day');
+  }
 }
