@@ -1,32 +1,33 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static const Color primary = Color(0xFF0055A5);
-  static const Color primaryLight = Color(0xFF1976D2);
-  static const Color primaryDark = Color(0xFF003B74);
-  static const Color accent = Color(0xFF00A9CE);
-  static const Color accent2 = Color(0xFFE8F4FD);
-  static const Color success = Color(0xFF2E7D32);
-  static const Color warning = Color(0xFFF57C00);
-  static const Color danger = Color(0xFFC62828);
-  static const Color bg = Color(0xFFF0F4F8);
-  static const Color surface = Color(0xFFFFFFFF);
-  static const Color surface2 = Color(0xFFF8FAFB);
-  static const Color border = Color(0xFFE1E8EE);
-  static const Color text = Color(0xFF1A2332);
-  static const Color text2 = Color(0xFF5A6B7E);
-  static const Color text3 = Color(0xFF8FA3B1);
+  // --- Futuristic Premium Palette ---
 
-  static const Color darkPrimary = Color(0xFF1976D2);
-  static const Color darkPrimaryLight = Color(0xFF42A5F5);
-  static const Color darkPrimaryDark = Color(0xFF0D47A1);
-  static const Color darkAccent = Color(0xFF00BCD4);
-  static const Color darkAccent2 = Color(0xFF0D2137);
-  static const Color darkBg = Color(0xFF0A1929);
-  static const Color darkSurface = Color(0xFF0D2137);
-  static const Color darkSurface2 = Color(0xFF112240);
-  static const Color darkBorder = Color(0xFF1E3A5F);
-  static const Color darkText = Color(0xFFE8F0F8);
-  static const Color darkText2 = Color(0xFF8FA3B1);
-  static const Color darkText3 = Color(0xFF5A6B7E);
+  // Backgrounds
+  static const Color bgDark = Color(0xFF020408);
+  static const Color bgLight = Color(0xFFF2F5F9);
+
+  // Accent & Brand
+  static const Color primary = Color(0xFF007AFF); // Apple Blue
+  static const Color secondary = Color(0xFF5856D6); // Premium Purple
+  static const Color accent = Color(0xFF32ADE6); // Cyan
+
+  // Status
+  static const Color success = Color(0xFF34C759);
+  static const Color warning = Color(0xFFFF9500);
+  static const Color danger = Color(0xFFFF3B30);
+
+  // Glass Surface Tokens (Dark Mode)
+  static const Color glassBG = Color(0x1AFFFFFF); // 10% White
+  static const Color glassBorder = Color(0x33FFFFFF); // 20% White
+  static const Color glassShadow = Color(0x40000000); // 25% Black
+
+  // Glass Surface Tokens (Light Mode)
+  static const Color glassBGLight = Color(0x66FFFFFF); // 40% White
+  static const Color glassBorderLight = Color(0x4D007AFF); // 30% Primary
+
+  // Typography
+  static const Color textMain = Color(0xFFF2F2F7);
+  static const Color textSub = Color(0xFF8E8E93);
+  static const Color textDark = Color(0xFF1C1C1E);
 }
