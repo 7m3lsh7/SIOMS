@@ -23,4 +23,19 @@ class CanteenRepositoryImpl implements CanteenRepository {
       'items': items.map((i) => {'id': i.product.id, 'qty': i.quantity}).toList(),
     });
   }
+
+  @override
+  Future<void> createProduct(Map<String, dynamic> data) async {
+    await _apiClient.post('/canteen/products', data: data);
+  }
+
+  @override
+  Future<void> updateProduct(int id, Map<String, dynamic> data) async {
+    await _apiClient.put('/canteen/products/$id', data: data);
+  }
+
+  @override
+  Future<void> deleteProduct(int id) async {
+    await _apiClient.delete('/canteen/products/$id');
+  }
 }

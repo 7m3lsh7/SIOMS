@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile_app/presentation/providers/auth_provider.dart';
 import 'package:mobile_app/core/theme/app_colors.dart';
 import 'package:mobile_app/presentation/widgets/glass_container.dart';
+import 'package:mobile_app/presentation/widgets/glass_button.dart';
 
 class HRScreen extends ConsumerWidget {
   const HRScreen({super.key});
@@ -14,6 +15,13 @@ class HRScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Personnel'),
+        actions: [
+          IconButton(
+            onPressed: () => _showAddEmployee(context, ref),
+            icon: const Icon(Icons.person_add_alt_1_rounded),
+          ),
+          const SizedBox(width: 8),
+        ],
       ),
       body: employeesAsync.when(
         data: (employees) => ListView.builder(
@@ -46,7 +54,15 @@ class HRScreen extends ConsumerWidget {
                         ],
                       ),
                     ),
-                    _buildStatusBadge(employee.status),
+                    Column(
+                      children: [
+                        _buildStatusBadge(employee.status),
+                        IconButton(
+                          onPressed: () => _deleteEmployee(context, ref, employee.id),
+                          icon: const Icon(Icons.delete_outline_rounded, color: AppColors.danger, size: 20),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),
@@ -57,6 +73,20 @@ class HRScreen extends ConsumerWidget {
         error: (err, stack) => Center(child: Text('Error: $err')),
       ),
     );
+  }
+
+  void _showAddEmployee(BuildContext context, WidgetRef ref) {
+    // Show premium modal for adding employee...
+  }
+
+  void _deleteEmployee(BuildContext context, WidgetRef ref, int id) async {
+    try {
+      await ref.read(employeeRepositoryProvider).deleteEmployee(id);
+      ref.invalidate(employeesProvider);
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Employee deleted.')));
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error: $e')));
+    }
   }
 
   Widget _buildStatusBadge(String status) {

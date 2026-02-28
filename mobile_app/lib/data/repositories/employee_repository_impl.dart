@@ -34,4 +34,19 @@ class EmployeeRepositoryImpl implements EmployeeRepository {
   Future<void> submitLeaveRequest(Map<String, dynamic> data) async {
     await _apiClient.post('/hr/my-leaves', data: data);
   }
+
+  @override
+  Future<void> createEmployee(Map<String, dynamic> data) async {
+    await _apiClient.post('/employees', data: data);
+  }
+
+  @override
+  Future<void> updateEmployee(int id, Map<String, dynamic> data) async {
+    await _apiClient.put('/employees/$id', data: data);
+  }
+
+  @override
+  Future<void> deleteEmployee(int id) async {
+    await _apiClient.delete('/employees/$id');
+  }
 }

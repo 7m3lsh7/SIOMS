@@ -50,4 +50,14 @@ class AuthRepositoryImpl implements AuthRepository {
     }
     return null;
   }
+
+  @override
+  Future<void> registerRequest(Map<String, dynamic> data) async {
+    await _apiClient.post('/auth/register-request', data: data);
+  }
+
+  @override
+  Future<void> verifyEmail(String email, String code) async {
+    await _apiClient.post('/auth/verify-email', data: {'email': email, 'code': code});
+  }
 }

@@ -13,8 +13,14 @@ class LoginScreen extends ConsumerStatefulWidget {
 }
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
+  String _step = 'login'; // 'login', 'register', 'verify'
   final _emailController = TextEditingController(text: 'admin@school.edu.eg');
   final _passwordController = TextEditingController(text: 'admin123');
+
+  // Register controllers
+  final _regNameController = TextEditingController();
+  final _regEmailController = TextEditingController();
+  final _verifyCodeController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +29,16 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          // Background Depth
+          // Background Gradient/Depth
+          Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [Color(0xFF020408), Color(0xFF0D121F)],
+              ),
+            ),
+          ),
           Positioned(
             top: -100,
             right: -50,
@@ -32,119 +47,54 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               height: 300,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: AppColors.primary.withOpacity(0.3),
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: -50,
-            left: -50,
-            child: Container(
-              width: 250,
-              height: 250,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColors.secondary.withOpacity(0.2),
+                color: AppColors.primary.withOpacity(0.2),
               ),
             ),
           ),
 
-          // Content
           Center(
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(24.0),
               child: Column(
                 children: [
-                  // App Icon / Logo Area
                   Hero(
                     tag: 'app_logo',
                     child: GlassContainer(
-                      width: 80,
-                      height: 80,
-                      borderRadius: 22,
-                      blur: 10,
+                      width: 70,
+                      height: 70,
+                      borderRadius: 20,
                       child: const Center(
-                        child: Text(
-                          'S',
-                          style: TextStyle(
-                            fontSize: 40,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            fontFamily: 'Sora',
-                          ),
-                        ),
+                        child: Icon(Icons.hub_rounded, color: Colors.white, size: 32),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 32),
-                  const Text(
-                    'SIOMS',
-                    style: TextStyle(
-                      fontFamily: 'Sora',
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: -1,
+                  const SizedBox(height: 24),
+                  const Text('SIOMS', style: TextStyle(fontFamily: 'Sora', fontSize: 28, fontWeight: FontWeight.bold, color: Colors.white)),
+                  const SizedBox(height: 40),
+
+                  // Step Switcher
+                  if (_step != 'verify')
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 24.0),
+                    child: GlassContainer(
+                      borderRadius: 15,
+                      opacity: 0.05,
+                      padding: const EdgeInsets.all(4),
+                      child: Row(
+                        children: [
+                          _buildTabItem('login', 'Sign In'),
+                          _buildTabItem('register', 'Request Access'),
+                        ],
+                      ),
                     ),
                   ),
-                  const Text(
-                    'Futuristic Operations Control',
-                    style: TextStyle(color: AppColors.textSub, fontSize: 14),
-                  ),
-                  const SizedBox(height: 48),
 
-                  // Login Glass Card
+                  // Dynamic Form based on step
                   GlassContainer(
                     padding: const EdgeInsets.all(32),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Welcome back',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Sora',
-                          ),
-                        ),
-                        const SizedBox(height: 24),
-                        _buildTextField(
-                          controller: _emailController,
-                          label: 'Email Address',
-                          icon: Icons.alternate_email_rounded,
-                        ),
-                        const SizedBox(height: 16),
-                        _buildTextField(
-                          controller: _passwordController,
-                          label: 'Password',
-                          icon: Icons.lock_outline_rounded,
-                          isPassword: true,
-                        ),
-                        if (authState.error != null) ...[
-                          const SizedBox(height: 16),
-                          Text(
-                            authState.error!,
-                            style: const TextStyle(color: AppColors.danger, fontSize: 12),
-                          ),
-                        ],
-                        const SizedBox(height: 32),
-                        GlassButton(
-                          label: authState.isLoading ? 'Authenticating...' : 'Sign In',
-                          onPressed: () {
-                            ref.read(authProvider.notifier).login(
-                              _emailController.text,
-                              _passwordController.text,
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 32),
-                  TextButton(
-                    onPressed: () {},
-                    child: const Text(
-                      'Forgot password?',
-                      style: TextStyle(color: AppColors.textSub),
+                    child: AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 300),
+                      child: _buildForm(authState),
                     ),
                   ),
                 ],
@@ -153,6 +103,129 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildTabItem(String step, String label) {
+    final isSelected = _step == step;
+    return Expanded(
+      child: GestureDetector(
+        onTap: () => setState(() => _step = step),
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          decoration: BoxDecoration(
+            color: isSelected ? AppColors.primary : Colors.transparent,
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Text(
+            label,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: isSelected ? Colors.white : AppColors.textSub,
+              fontWeight: FontWeight.bold,
+              fontSize: 13,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildForm(AuthState authState) {
+    if (_step == 'login') return _buildLoginForm(authState);
+    if (_step == 'register') return _buildRegisterForm();
+    return _buildVerifyForm();
+  }
+
+  Widget _buildLoginForm(AuthState authState) {
+    return Column(
+      key: const ValueKey('login'),
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text('Welcome Back', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, fontFamily: 'Sora')),
+        const SizedBox(height: 8),
+        const Text('Enter your credentials to continue', style: TextStyle(color: AppColors.textSub, fontSize: 13)),
+        const SizedBox(height: 32),
+        _buildTextField(controller: _emailController, label: 'Email', icon: Icons.alternate_email_rounded),
+        const SizedBox(height: 16),
+        _buildTextField(controller: _passwordController, label: 'Password', icon: Icons.lock_outline_rounded, isPassword: true),
+        if (authState.error != null) ...[
+          const SizedBox(height: 16),
+          Text(authState.error!, style: const TextStyle(color: AppColors.danger, fontSize: 12)),
+        ],
+        const SizedBox(height: 32),
+        GlassButton(
+          label: authState.isLoading ? 'Verifying...' : 'Sign In',
+          onPressed: () => ref.read(authProvider.notifier).login(_emailController.text, _passwordController.text),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildRegisterForm() {
+    return Column(
+      key: const ValueKey('register'),
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text('Request Access', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, fontFamily: 'Sora')),
+        const SizedBox(height: 8),
+        const Text('Submit your details for admin approval', style: TextStyle(color: AppColors.textSub, fontSize: 13)),
+        const SizedBox(height: 32),
+        _buildTextField(controller: _regNameController, label: 'Full Name', icon: Icons.person_outline_rounded),
+        const SizedBox(height: 16),
+        _buildTextField(controller: _regEmailController, label: 'Work Email', icon: Icons.email_outlined),
+        const SizedBox(height: 32),
+        GlassButton(
+          label: 'Submit Request',
+          onPressed: () async {
+            try {
+              await ref.read(authRepositoryProvider).registerRequest({
+                'name': _regNameController.text,
+                'email': _regEmailController.text,
+                'requestedRole': 'Employee',
+              });
+              setState(() => _step = 'verify');
+            } catch (e) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error: $e')));
+            }
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildVerifyForm() {
+    return Column(
+      key: const ValueKey('verify'),
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Center(child: Icon(Icons.mark_email_read_rounded, color: AppColors.primary, size: 48)),
+        const SizedBox(height: 24),
+        const Text('Verify Email', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, fontFamily: 'Sora')),
+        const SizedBox(height: 8),
+        const Text('Enter the 6-digit code sent to your email', style: TextStyle(color: AppColors.textSub, fontSize: 13)),
+        const SizedBox(height: 32),
+        _buildTextField(controller: _verifyCodeController, label: 'Verification Code', icon: Icons.pin_rounded),
+        const SizedBox(height: 32),
+        GlassButton(
+          label: 'Verify Code',
+          onPressed: () async {
+            try {
+              await ref.read(authRepositoryProvider).verifyEmail(_regEmailController.text, _verifyCodeController.text);
+              setState(() => _step = 'login');
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Email verified! Pending admin approval.')));
+            } catch (e) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error: $e')));
+            }
+          },
+        ),
+        Center(
+          child: TextButton(
+            onPressed: () => setState(() => _step = 'register'),
+            child: const Text('Go back', style: TextStyle(color: AppColors.textSub)),
+          ),
+        ),
+      ],
     );
   }
 
