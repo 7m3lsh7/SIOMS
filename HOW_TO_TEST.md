@@ -4,7 +4,7 @@ Follow these steps to set up the environment and run the application.
 
 ## 1. Start the Backend Server
 
-The Flutter app connects to the Node.js backend
+The Flutter app connects to the Node.js backend. You must start it first.
 
 ```bash
 cd sioms-backend
