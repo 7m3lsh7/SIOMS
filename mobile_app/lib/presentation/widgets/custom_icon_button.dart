@@ -30,7 +30,7 @@ class CustomIconButton extends StatelessWidget {
       clipBehavior: Clip.none,
       children: [
         InkWell(
-          onPressed: onPressed,
+          onTap: onPressed,
           borderRadius: BorderRadius.circular(10),
           child: Container(
             width: 38,

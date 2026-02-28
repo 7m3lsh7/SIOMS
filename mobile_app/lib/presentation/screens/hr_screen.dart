@@ -21,7 +21,7 @@ class HRScreen extends ConsumerWidget {
           itemBuilder: (context, index) {
             final employee = employees[index];
             return Card(
-              margin: const EdgeInsets.bottom(12),
+              margin: const EdgeInsets.only(bottom: 12),
               child: ListTile(
                 leading: CircleAvatar(
                   backgroundImage: NetworkImage(employee.avatar),

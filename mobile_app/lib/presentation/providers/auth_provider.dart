@@ -7,6 +7,7 @@ import 'package:mobile_app/domain/repositories/auth_repository.dart';
 import 'package:mobile_app/data/models/user_model.dart';
 import 'package:mobile_app/domain/repositories/employee_repository.dart';
 import 'package:mobile_app/data/repositories/employee_repository_impl.dart';
+import 'package:mobile_app/data/models/employee_model.dart';
 import 'package:mobile_app/domain/repositories/payroll_repository.dart';
 import 'package:mobile_app/data/repositories/payroll_repository_impl.dart';
 import 'package:mobile_app/data/models/payroll_model.dart';

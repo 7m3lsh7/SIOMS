@@ -50,7 +50,7 @@ class AppTheme {
       bodyLarge: TextStyle(fontFamily: 'DMSans', color: AppColors.text),
       bodyMedium: TextStyle(fontFamily: 'DMSans', color: AppColors.text2),
     ),
-    cardTheme: CardTheme(
+    cardTheme: CardThemeData(
       color: AppColors.surface,
       elevation: 0,
       shape: RoundedRectangleBorder(
@@ -79,7 +79,7 @@ class AppTheme {
       bodyLarge: TextStyle(fontFamily: 'DMSans', color: AppColors.darkText),
       bodyMedium: TextStyle(fontFamily: 'DMSans', color: AppColors.darkText2),
     ),
-    cardTheme: CardTheme(
+    cardTheme: CardThemeData(
       color: AppColors.darkSurface,
       elevation: 0,
       shape: RoundedRectangleBorder(

@@ -23,7 +23,7 @@ class PayrollScreen extends ConsumerWidget {
           itemBuilder: (context, index) {
             final record = records[index];
             return Card(
-              margin: const EdgeInsets.bottom(12),
+              margin: const EdgeInsets.only(bottom: 12),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
