@@ -30,4 +30,10 @@ class AppColors {
   static const Color textMain = Color(0xFFF2F2F7);
   static const Color textSub = Color(0xFF8E8E93);
   static const Color textDark = Color(0xFF1C1C1E);
+
+  // Legacy compatibility members (if needed by older screens)
+  static const Color text = Color(0xFF1C1C1E);
+  static const Color text2 = Color(0xFF8E8E93);
+  static const Color text3 = Color(0xFF8E8E93);
+  static const Color bg = Color(0xFFF2F5F9);
 }
