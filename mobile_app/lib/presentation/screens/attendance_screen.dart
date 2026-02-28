@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile_app/presentation/providers/auth_provider.dart';
 import 'package:mobile_app/core/theme/app_colors.dart';
+import 'package:mobile_app/presentation/widgets/glass_container.dart';
 
 class AttendanceScreen extends ConsumerWidget {
   const AttendanceScreen({super.key});
@@ -12,45 +13,45 @@ class AttendanceScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Attendance', style: TextStyle(fontFamily: 'Sora', fontWeight: FontWeight.bold)),
+        title: const Text('Logistics'),
       ),
       body: attendanceAsync.when(
         data: (records) => ListView.builder(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 100),
           itemCount: records.length,
           itemBuilder: (context, index) {
             final record = records[index];
-            return Card(
-              margin: const EdgeInsets.only(bottom: 12),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 12.0),
+              child: GlassContainer(
+                padding: const EdgeInsets.all(16),
                 child: Row(
                   children: [
-                    CircleAvatar(
-                      backgroundColor: AppColors.primary,
-                      child: Text(record.employeeName[0], style: const TextStyle(color: Colors.white)),
+                    Container(
+                      width: 48,
+                      height: 48,
+                      decoration: BoxDecoration(
+                        color: AppColors.primary.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                      child: Center(
+                        child: Text(
+                          record.employeeName[0],
+                          style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.primary, fontSize: 18),
+                        ),
+                      ),
                     ),
                     const SizedBox(width: 16),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(record.employeeName, style: const TextStyle(fontWeight: FontWeight.bold)),
-                          Text(record.department, style: const TextStyle(fontSize: 12, color: AppColors.text3)),
+                          Text(record.employeeName, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                          Text(record.department, style: const TextStyle(fontSize: 12, color: AppColors.textSub)),
                         ],
                       ),
                     ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: _getStatusColor(record.status).withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Text(
-                        record.status,
-                        style: TextStyle(color: _getStatusColor(record.status), fontSize: 12, fontWeight: FontWeight.bold),
-                      ),
-                    ),
+                    _buildIndicator(record.status),
                   ],
                 ),
               ),
@@ -63,12 +64,25 @@ class AttendanceScreen extends ConsumerWidget {
     );
   }
 
-  Color _getStatusColor(String status) {
+  Widget _buildIndicator(String status) {
+    Color color;
     switch (status) {
-      case 'Present': return Colors.green;
-      case 'Late': return Colors.orange;
-      case 'Absent': return Colors.red;
-      default: return Colors.grey;
+      case 'Present': color = AppColors.success; break;
+      case 'Late': color = AppColors.warning; break;
+      case 'Absent': color = AppColors.danger; break;
+      default: color = Colors.grey;
     }
+
+    return Column(
+      children: [
+        Container(
+          width: 8,
+          height: 8,
+          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+        ),
+        const SizedBox(height: 4),
+        Text(status, style: TextStyle(color: color, fontSize: 10, fontWeight: FontWeight.bold)),
+      ],
+    );
   }
 }
