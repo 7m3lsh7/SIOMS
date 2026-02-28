@@ -21,7 +21,7 @@ class WorkshopScreen extends ConsumerWidget {
           itemBuilder: (context, index) {
             final item = items[index];
             return Card(
-              margin: const EdgeInsets.bottom(12),
+              margin: const EdgeInsets.only(bottom: 12),
               child: ListTile(
                 title: Text(item.name, style: const TextStyle(fontWeight: FontWeight.bold)),
                 subtitle: Text('${item.model} · ${item.department}'),

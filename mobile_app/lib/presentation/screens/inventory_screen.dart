@@ -23,7 +23,7 @@ class InventoryScreen extends ConsumerWidget {
             final isLowStock = item.quantity <= item.minStock;
 
             return Card(
-              margin: const EdgeInsets.bottom(12),
+              margin: const EdgeInsets.only(bottom: 12),
               child: ListTile(
                 title: Text(item.name, style: const TextStyle(fontWeight: FontWeight.bold)),
                 subtitle: Text('Category: ${item.category} · SKU: ${item.sku}'),

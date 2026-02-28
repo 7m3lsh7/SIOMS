@@ -55,7 +55,7 @@ class CanteenScreen extends ConsumerWidget {
             final product = products[index];
             return Card(
               child: InkWell(
-                onPressed: () => _addToCart(ref, product),
+                onTap: () => _addToCart(ref, product),
                 child: Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: Column(

@@ -37,14 +37,14 @@ class DashboardScreen extends ConsumerWidget {
           children: [
             Text('Welcome back, ${user?.name ?? "User"}', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
             const SizedBox(height: 24),
-            const GridView.count(
+            GridView.count(
               crossAxisCount: 2,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               mainAxisSpacing: 16,
               crossAxisSpacing: 16,
               childAspectRatio: 1.2,
-              children: [
+              children: const [
                 KPICard(label: 'Total Employees', value: '1,240', color: Color(0xFF0055A5)),
                 KPICard(label: 'Present Today', value: '92%', color: Color(0xFF2E7D32)),
                 KPICard(label: 'Monthly Payroll', value: 'EGP 420K', color: Color(0xFF7B1FA2)),

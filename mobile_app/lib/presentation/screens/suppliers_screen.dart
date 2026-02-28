@@ -22,7 +22,7 @@ class SuppliersScreen extends ConsumerWidget {
             final supplier = suppliers[index];
 
             return Card(
-              margin: const EdgeInsets.bottom(12),
+              margin: const EdgeInsets.only(bottom: 12),
               child: ListTile(
                 title: Text(supplier.name, style: const TextStyle(fontWeight: FontWeight.bold)),
                 subtitle: Text('Category: ${supplier.category}\nContact: ${supplier.contact}'),
