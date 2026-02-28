@@ -92,7 +92,7 @@ class DashboardScreen extends ConsumerWidget {
             const SizedBox(height: 24),
 
             // Chart Section
-            const FadeInSlide(
+             FadeInSlide(
               offset: 50,
               child: GlassContainer(
               padding: EdgeInsets.all(20),

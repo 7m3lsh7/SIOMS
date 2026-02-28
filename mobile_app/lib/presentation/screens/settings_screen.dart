@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mobile_app/core/theme/app_theme.dart';
 import 'package:mobile_app/presentation/providers/auth_provider.dart';
 import 'package:mobile_app/core/theme/app_colors.dart';
 import 'package:mobile_app/presentation/widgets/glass_container.dart';
